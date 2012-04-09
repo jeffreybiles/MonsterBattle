@@ -19,6 +19,7 @@ end
 
 group :test, :development do
   gem 'sqlite3'
+  gem 'nifty-generators'
 end
 
 
@@ -50,3 +51,5 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+gem "mocha", :group => :test

@@ -1,4 +1,7 @@
 MonsterBattle::Application.routes.draw do
+  match '/auth/:provider/callback' => 'authentications#create'
+
+  resources :authentications
 
   devise_for :users, :controllers => { :registrations => "registrations" }
   resources :users
