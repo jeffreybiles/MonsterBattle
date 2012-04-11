@@ -9,6 +9,7 @@ gem 'execjs'
 gem 'haml'
 gem 'haml-rails'
 gem 'simple_form'
+gem 'make_resourceful'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

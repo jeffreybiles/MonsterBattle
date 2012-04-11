@@ -87,10 +87,13 @@ GEM
     launchy (2.1.0)
       addressable (~> 2.2.6)
     libv8 (3.3.10.4)
+    libwebsocket (0.1.3)
+      addressable
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    make_resourceful (1.0.1)
     metaclass (0.0.1)
     mime-types (1.18)
     mocha (0.10.5)
@@ -157,9 +160,10 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    selenium-webdriver (2.20.0)
+    selenium-webdriver (2.21.0)
       childprocess (>= 0.2.5)
       ffi (~> 1.0)
+      libwebsocket (~> 0.1.3)
       multi_json (~> 1.0)
       rubyzip
     shoulda-matchers (1.0.0)
@@ -205,6 +209,7 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   launchy
+  make_resourceful
   mocha
   nifty-generators
   omniauth
