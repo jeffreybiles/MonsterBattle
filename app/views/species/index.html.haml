@@ -1,0 +1,25 @@
+%h1 Listing species
+
+%table
+  %tr
+    %th Name
+    %th Hp growth
+    %th Attack growth
+    %th Defense growth
+    %th
+    %th
+    %th
+
+  - @species.each do |species|
+    %tr
+      %td= species.name
+      %td= species.hp_growth
+      %td= species.attack_growth
+      %td= species.defense_growth
+      %td= link_to 'Show', species
+      %td= link_to 'Edit', edit_species_path(species)
+      %td= link_to 'Destroy', species, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Species', new_species_path

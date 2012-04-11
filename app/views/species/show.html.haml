@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @species.name
+%p
+  %b Hp growth:
+  = @species.hp_growth
+%p
+  %b Attack growth:
+  = @species.attack_growth
+%p
+  %b Defense growth:
+  = @species.defense_growth
+
+= link_to 'Edit', edit_species_path(@species)
+\|
+= link_to 'Back', species_index_path

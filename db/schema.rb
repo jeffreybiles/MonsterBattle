@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120410024250) do
+ActiveRecord::Schema.define(:version => 20120411154622) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -27,8 +27,14 @@ ActiveRecord::Schema.define(:version => 20120410024250) do
     t.decimal  "experience"
     t.integer  "user_id"
     t.integer  "species_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.decimal  "max_hp"
+    t.decimal  "max_attack"
+    t.decimal  "max_defense"
+    t.decimal  "current_hp"
+    t.decimal  "current_attack"
+    t.decimal  "current_defense"
   end
 
   create_table "species", :force => true do |t|

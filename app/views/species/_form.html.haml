@@ -1,0 +1,8 @@
+= simple_form_for @species do |f|
+  = render 'layouts/errors', object: @species
+
+  .field= f.input :name
+  .field= f.input :hp_growth
+  .field= f.input :attack_growth
+  .field= f.input :defense_growth
+  .actions= f.submit 'Save'

@@ -41,7 +41,15 @@ class MonstersController < ApplicationController
   # POST /monsters.json
   def create
     @monster = Monster.new(params[:monster])
-
+    unless @monster.level then @monster.level = 1 end
+    unless @monster.experience then @monster.experience = 0 end
+    #these next six lines are in desperate need of refactoring.  Use metaprogramming (see examples in rails antipatterns) after tests are in place.
+    @monster.max_hp = @monster.level * @monster.species.hp_growth - (rand()*@monster.level/2).round(0)
+    @monster.max_attack= @monster.level * @monster.species.attack_growth - (rand()*@monster.level/2).round(0)
+    @monster.max_defense= @monster.level * @monster.species.defense_growth - (rand()*@monster.level/2).round(0)
+    @monster.current_hp = @monster.max_hp
+    @monster.current_attack = @monster.max_attack
+    @monster.current_defense = @monster.max_defense
     respond_to do |format|
       if @monster.save
         format.html { redirect_to @monster, notice: 'Monster was successfully created.' }

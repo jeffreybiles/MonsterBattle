@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Custom name:
+  = @monster.custom_name
+%p
+  %b Level:
+  = @monster.level
+%p
+  %b Experience:
+  = @monster.experience
+%p
+  %b User:
+  = @monster.user.name
+%p
+  %b Species:
+  = @monster.species.name
+
+= link_to 'Edit', edit_monster_path(@monster)
+\|
+= link_to 'Back', monsters_path
