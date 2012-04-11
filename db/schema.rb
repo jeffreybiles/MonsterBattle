@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120409163642) do
+ActiveRecord::Schema.define(:version => 20120410024250) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -19,6 +19,25 @@ ActiveRecord::Schema.define(:version => 20120409163642) do
     t.string   "uid"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "monsters", :force => true do |t|
+    t.string   "custom_name"
+    t.integer  "level"
+    t.decimal  "experience"
+    t.integer  "user_id"
+    t.integer  "species_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "species", :force => true do |t|
+    t.string   "name"
+    t.decimal  "hp_growth"
+    t.decimal  "attack_growth"
+    t.decimal  "defense_growth"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "users", :force => true do |t|

@@ -1,4 +1,8 @@
 MonsterBattle::Application.routes.draw do
+  resources :monsters
+
+  resources :species
+
   match '/auth/:provider/callback' => 'authentications#create'
 
   resources :authentications

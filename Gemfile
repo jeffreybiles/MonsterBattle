@@ -8,13 +8,22 @@ gem 'therubyracer'
 gem 'execjs'
 gem 'haml'
 gem 'haml-rails'
-
+gem 'simple_form'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :production do
   gem 'pg'
   gem 'thin'
+end
+
+group :test do
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'launchy'
+  gem 'factory_girl_rails'
 end
 
 group :test, :development do
