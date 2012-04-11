@@ -1,0 +1,23 @@
+%h1 Listing species_moves
+
+%table
+  %tr
+    %th Species
+    %th Move
+    %th Level learned
+    %th
+    %th
+    %th
+
+  - @species_moves.each do |species_move|
+    %tr
+      %td= species_move.species.name
+      %td= species_move.move.name
+      %td= species_move.level_learned
+      %td= link_to 'Show', species_move
+      %td= link_to 'Edit', edit_species_move_path(species_move)
+      %td= link_to 'Destroy', species_move, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Species move', new_species_move_path

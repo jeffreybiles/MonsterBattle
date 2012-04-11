@@ -1,4 +1,8 @@
 MonsterBattle::Application.routes.draw do
+  resources :species_moves
+
+  resources :moves
+
   resources :monsters
 
   resources :species

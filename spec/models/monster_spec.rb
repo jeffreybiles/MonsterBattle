@@ -21,4 +21,12 @@ describe Monster do
     monster.species.name == 'Grassachu'
   end
 
+  it "will automatically set hp" do
+    monster = FactoryGirl.create(:monster)
+    monster.set_stats
+    monster.max_hp <= monster.species.hp_growth * monster.level
+    monster.max_hp >= monster.species.hp_growth * (monster.level - 0.5)
+    monster.current_hp == monster.max_hp
+  end
+
 end

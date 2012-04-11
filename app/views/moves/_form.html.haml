@@ -1,0 +1,7 @@
+= simple_form_for @move do |f|
+  = render 'layouts/errors', object: @move
+
+  .field= f.input :name
+  .field= f.input :damage
+  .field= f.input :hit_chance
+  .actions= f.submit 'Save'

@@ -9,4 +9,7 @@ class Species < ActiveRecord::Base
   validates :defense_growth, numericality: true
 
   has_many :monsters
+
+  has_many :species_moves
+  has_many :moves, through: :species_moves
 end

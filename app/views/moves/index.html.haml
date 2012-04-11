@@ -1,0 +1,23 @@
+%h1 Listing moves
+
+%table
+  %tr
+    %th Name
+    %th Damage
+    %th Hit chance
+    %th
+    %th
+    %th
+
+  - @moves.each do |move|
+    %tr
+      %td= move.name
+      %td= move.damage
+      %td= move.hit_chance
+      %td= link_to 'Show', move
+      %td= link_to 'Edit', edit_move_path(move)
+      %td= link_to 'Destroy', move, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Move', new_move_path

@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Species:
+  = @species_move.species.name
+%p
+  %b Move:
+  = @species_move.move.name
+%p
+  %b Level learned:
+  = @species_move.level_learned
+
+= link_to 'Edit', edit_species_move_path(@species_move)
+\|
+= link_to 'Back', species_moves_path

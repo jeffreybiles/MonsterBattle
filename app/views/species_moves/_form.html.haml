@@ -1,0 +1,7 @@
+= simple_form_for @species_move do |f|
+  = render 'layouts/errors', object: @species_move
+
+  .field= f.input :species_id, collection: Species.all
+  .field= f.input :move_id, collection: Move.all
+  .field= f.input :level_learned
+  .actions= f.submit 'Save'

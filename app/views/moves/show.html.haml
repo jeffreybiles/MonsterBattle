@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @move.name
+%p
+  %b Damage:
+  = @move.damage
+%p
+  %b Hit chance:
+  = @move.hit_chance
+
+= link_to 'Edit', edit_move_path(@move)
+\|
+= link_to 'Back', moves_path

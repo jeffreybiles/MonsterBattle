@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120411154622) do
+ActiveRecord::Schema.define(:version => 20120411222016) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -37,6 +37,14 @@ ActiveRecord::Schema.define(:version => 20120411154622) do
     t.decimal  "current_defense"
   end
 
+  create_table "moves", :force => true do |t|
+    t.string   "name"
+    t.decimal  "damage"
+    t.decimal  "hit_chance"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "species", :force => true do |t|
     t.string   "name"
     t.decimal  "hp_growth"
@@ -44,6 +52,14 @@ ActiveRecord::Schema.define(:version => 20120411154622) do
     t.decimal  "defense_growth"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+  end
+
+  create_table "species_moves", :force => true do |t|
+    t.integer  "species_id"
+    t.integer  "move_id"
+    t.integer  "level_learned"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "users", :force => true do |t|
