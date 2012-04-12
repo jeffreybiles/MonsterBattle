@@ -1,4 +1,5 @@
 class Monster < ActiveRecord::Base
+  before_create :set_stats
   attr_accessible :custom_name, :experience, :level, :user_id, :species_id, :user_name
 
   belongs_to :user

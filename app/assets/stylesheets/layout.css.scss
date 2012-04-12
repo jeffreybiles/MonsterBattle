@@ -1,0 +1,10 @@
+h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 18px 0;
+}
+
+ul.horizontal#nav {
+  @include horizontal-list;
+  float: right;
+}

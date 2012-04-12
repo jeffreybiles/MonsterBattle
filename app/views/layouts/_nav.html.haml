@@ -1,0 +1,17 @@
+%ul.horizontal#nav
+  %li= link_to "users", '/users'
+  %li= link_to "species", '/species'
+  %li= link_to "monsters", '/monsters'
+  %li= link_to "moves", '/moves'
+  %li= link_to "species_moves", '/species_moves'
+  %li ||
+  %li
+    - if user_signed_in?
+      Signed in as
+      = current_user.email
+      = ". Not you?"
+      = link_to "Sign out", destroy_user_session_path, method: :delete
+    - else
+      = link_to "Sign up", new_user_registration_path
+      or
+      = link_to "Sign in", new_user_session_path
