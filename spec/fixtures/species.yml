@@ -1,0 +1,11 @@
+one:
+  name: MyString
+  hp_growth: 9.99
+  attack_growth: 9.99
+  defense_growth: 9.99
+
+two:
+  name: MyString
+  hp_growth: 9.99
+  attack_growth: 9.99
+  defense_growth: 9.99

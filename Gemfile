@@ -11,6 +11,7 @@ gem 'haml-rails'
 gem 'simple_form'
 gem 'make_resourceful'
 gem 'compass-rails'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -33,6 +34,7 @@ group :test, :development do
   gem 'nifty-generators'
 end
 
+gem 'quiet_assets', group: :development
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -38,7 +38,7 @@ $(document).ready ->
   $('#attacks').html('<ul></ul>')
   for attackIndex in heroAttacks
     attack = attacks[attackIndex]
-    $('#attacks').append("<li class='#{attack.name} attack' data-power='#{attack.power}' data-name='#{attack.name}'>#{attack.name}</li>")
+    $('#attacks').append("<li class='#{attack.name} attack' data-power='#{attack.power}' data-name='#{attack.name}'><a href='#' id='#{attack.name}'>#{attack.name}</a></li>")
     $("#attacks .#{attack.name}").click(->
       enemy.hp -= $(this).data('power')
       #TODO: start an animation here!
