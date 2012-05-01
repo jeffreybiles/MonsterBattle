@@ -1,4 +1,5 @@
 MonsterBattle::Application.routes.draw do
+
   resources :species_moves
 
   resources :moves
@@ -15,7 +16,7 @@ MonsterBattle::Application.routes.draw do
   resources :users
   #match '/users/sign_out', to: 'devise/sessions#destroy'
 
-  root to: 'users#new'
+  root to: 'battle#start'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

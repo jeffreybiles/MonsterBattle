@@ -19,4 +19,10 @@ FactoryGirl.define do
     user
     species
   end
+
+  factory :move do
+    name 'slash'
+    damage 10
+    hit_chance 10
+  end
 end

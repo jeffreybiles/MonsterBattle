@@ -23,7 +23,7 @@ describe "Monsters" do
         fill_in 'Custom name', with: "Testy!"
         fill_in 'Level', with: 10
         fill_in 'Experience', with: 0
-        page.select 'test', from: 'User' #broken because test doesn't have any users
+        page.select 'test', from: 'User'
         page.select 'Grassachu', from: 'Species'
         click_button 'Save'
         page.should have_content("Create successful!")
