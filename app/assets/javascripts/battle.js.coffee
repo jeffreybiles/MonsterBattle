@@ -21,23 +21,37 @@ class Monster
 
 
 
-
-
-
-
 class Hero extends Monster
   constructor: (json) ->
     json = json.hero if json.hero
     @type = 'hero'
     super json
 
+  showTechniques: (myTechniques) ->
+    $('#techniques').html('<ul></ul>')
+    for technique in myTechniques
+      @attachTechnique(technique)
+
+  attachTechnique: (technique) ->
+    html = "<li class='#{technique.name} technique' data-power='#{technique.power}' data-name='#{technique.name}'><a href='#' id='#{technique.name}'>#{technique.name}</a></li>"
+    $('#techniques').append(html)
+    hero = this
+    $("#techniques .#{technique.name}").click(->
+      enemy.update_hp($(this).data('power')*-1)
+      #TODO: start an animation here!
+      $('#techniques').slideUp()
+      $('#message').text("#{hero.name} hits #{enemy.name} with #{$(this).data('name')}").slideDown()
+      console.log($('#message').text())
+      #TODO: make enemy take turn, then slide techniques back down
+    )
+
+
+
 class Enemy extends Monster
   constructor: (json) ->
     json = json.enemy if json.enemy
     @type = 'enemy'
     super json
-
-
 
 $(document).ready ->
   json =
@@ -58,7 +72,7 @@ $(document).ready ->
       techniques: [0]
       image_url: "http://avatarmaker.eu/free-avatars/avatars/games_225/super_mario_259/super_mario_panic_avatar_100x100_25831.gif"
 
-  techniques =
+  all_techniques =
     0:
       name: 'push'
       power: 2
@@ -74,18 +88,8 @@ $(document).ready ->
   hero.update_image()
   enemy.update_image()
 
-  $('#techniques').html('<ul></ul>')
-  for techniqueIndex in hero.techniques
-    technique = techniques[techniqueIndex]
-    $('#techniques').append("<li class='#{technique.name} technique' data-power='#{technique.power}' data-name='#{technique.name}'><a href='#' id='#{technique.name}'>#{technique.name}</a></li>")
-    $("#techniques .#{technique.name}").click(->
-      enemy.update_hp($(this).data('power')*-1)
-      #TODO: start an animation here!
-      $('#techniques').slideUp()
-      $('#message').text("#{hero.name} hits #{enemy.name} with #{$(this).data('name')}").slideDown()
-      console.log($('#message').text())
-      #TODO: make enemy take turn, then slide techniques back down
-    )
+  hero_techniques = hero.techniques.map((index) -> all_techniques[index])
+  hero.showTechniques(hero_techniques)
 
   window.hero = hero
   window.enemy = enemy
