@@ -37,11 +37,10 @@ class Hero extends Monster
     $('#techniques').append(html)
     hero = this
     $("#techniques .#{technique.name}").click(->
-      enemy.update_hp($(this).data('power')*-1)
-      #TODO: start an animation here!
+      technique.execute(enemy)
       $('#techniques').slideUp()
-      $('#message').text("#{hero.name} hits #{enemy.name} with #{$(this).data('name')}").slideDown()
-      #TODO: make enemy take turn, then slide techniques back down
+      enemy.attack()
+      $('#techniques').slideDown()
     )
 
 class Enemy extends Monster
@@ -50,16 +49,28 @@ class Enemy extends Monster
     @type = 'enemy'
     super json, all_techniques
 
-  #must figure out how to select a random technique
-#  attack: (technique = null) ->
-#    unless technique
-#      technique = @techniques
+  attack: (technique = null, target = hero) ->
+    unless technique
+      technique = @techniques[rand(@techniques.length) - 1]
+    technique.execute(target)
 
 class Technique
   constructor: (json) ->
     @id = json.id
     @name = json.name
     @power = json.power
+
+  execute: (target) ->
+    #TODO: start an animation here!
+    target.update_hp(-@power)
+    #enemy attack is coming so fast that there is no chance to see the "enemy was hit by XXXXX" message before it
+    #is replaced with "hero was hit by XXXXXX"
+    $('#message').text("#{target.name} was hit with #{@name}").slideDown()
+
+
+
+rand = (max) ->
+  Math.ceil(Math.random()*max)
 
 $(document).ready ->
   json =
