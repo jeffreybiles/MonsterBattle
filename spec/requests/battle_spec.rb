@@ -32,6 +32,7 @@ describe 'Battle' do
     end
 
     #this fails because 'push' is hidden, not gone.  The problem is the test, not the code
+    #TODO: figure out how to make tests ignore hidden stuff
     it "should not show attack options" #do
     #  page.should_not have_content('push')
     #end
