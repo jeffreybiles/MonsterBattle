@@ -1,5 +1,5 @@
 class Monster
-  constructor: (json) ->
+  constructor: (json, all_techniques) ->
     @name = json.name
     @max_attack = json.attack
     @current_attack = json.current_attack || @max_attack
@@ -8,12 +8,12 @@ class Monster
     @max_hp = json.hp
     @current_hp = json.current_hp || @max_hp
     @id = json.id
-    @techniques = json.techniques
+    @techniques = json.techniques.map((index) -> new Technique(all_techniques[index]))
     @image_url = json.image_url
 
   update_hp: (change = 0) ->
     @current_hp += change
-    $("##{@type} .hp").text(@current_hp)
+    $("##{@type} .hp").text("#{@current_hp}/#{@max_hp}")
 
   update_image: (url = @image_url) ->
     @image_url = url
@@ -22,14 +22,14 @@ class Monster
 
 
 class Hero extends Monster
-  constructor: (json) ->
+  constructor: (json, all_techniques) ->
     json = json.hero if json.hero
     @type = 'hero'
-    super json
+    super json, all_techniques
 
-  showTechniques: (myTechniques) ->
+  showTechniques: () ->
     $('#techniques').html('<ul></ul>')
-    for technique in myTechniques
+    for technique in @techniques
       @attachTechnique(technique)
 
   attachTechnique: (technique) ->
@@ -41,17 +41,25 @@ class Hero extends Monster
       #TODO: start an animation here!
       $('#techniques').slideUp()
       $('#message').text("#{hero.name} hits #{enemy.name} with #{$(this).data('name')}").slideDown()
-      console.log($('#message').text())
       #TODO: make enemy take turn, then slide techniques back down
     )
 
-
-
 class Enemy extends Monster
-  constructor: (json) ->
+  constructor: (json, all_techniques) ->
     json = json.enemy if json.enemy
     @type = 'enemy'
-    super json
+    super json, all_techniques
+
+  #must figure out how to select a random technique
+#  attack: (technique = null) ->
+#    unless technique
+#      technique = @techniques
+
+class Technique
+  constructor: (json) ->
+    @id = json.id
+    @name = json.name
+    @power = json.power
 
 $(document).ready ->
   json =
@@ -74,22 +82,24 @@ $(document).ready ->
 
   all_techniques =
     0:
+      id: 0
       name: 'push'
       power: 2
     1:
+      id: 1
       name: 'shove'
       power: 4
 
-  hero = new Hero(json)
-  enemy = new Enemy(json)
+  hero = new Hero(json, all_techniques)
+  enemy = new Enemy(json, all_techniques)
 
   hero.update_hp()
   enemy.update_hp()
   hero.update_image()
   enemy.update_image()
 
-  hero_techniques = hero.techniques.map((index) -> all_techniques[index])
-  hero.showTechniques(hero_techniques)
+  hero.showTechniques()
 
+  #for debugging.  REMOVE BEFORE PRODUCTION
   window.hero = hero
   window.enemy = enemy
