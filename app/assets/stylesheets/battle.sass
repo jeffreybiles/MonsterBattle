@@ -1,0 +1,38 @@
+@import _animate.sass
+
+$enemy-portrait-left: 191px
+$enemy-portrait-top: 8px
+
+#options
+  position: absolute
+  margin-left: 0px
+  margin-top: 0px
+
+#battleScreen
+  height: 200px
+  width: 300px
+  background-color: #E58F8F
+  position: relative
+
+#hero .hp
+  position: absolute
+  margin-left: 113px
+  margin-top: 158px
+
+#enemy
+  .hp
+    position: absolute
+    margin-left: 12px
+    margin-top: 8px
+  .portrait
+    //    This animation should only happen when the enemy is hit
+    //+animate(shake, 0.5s, 0)
+    left: $enemy-portrait-left
+    top: $enemy-portrait-top
+    position: absolute
+
+#hero .portrait
+  position: relative
+  left: 7px
+  top: 92px
+  position: absolute
