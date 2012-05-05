@@ -61,17 +61,16 @@ class Hero extends Monster
     super json, all_techniques
 
   showTechniques: () ->
+    $('#techniques').html('')
     for technique in @techniques
-      html = "<li class='#{technique.name} technique' data-power='#{technique.power}' data-name='#{technique.name}'><a href='#' id='#{technique.name}'>#{technique.name}</a></li>"
+      html = "<div class='#{technique.name} technique' data-power='#{technique.power}' data-name='#{technique.name}'>#{technique.name}</div>"
       $('#techniques').append(html)
       hero = this
-      $("#techniques .#{technique.name}").click(-> hero.attack(technique)    )
+      $("#techniques .#{technique.name}").click(-> hero.attack(technique))
+    updateSelector()
 
-  attack: (technique, target = enemy) ->
-    if state == 'playerTurn'
-      technique.execute(target)
-      $('#techniques').slideUp()
-      state = 'enemyTurn'
+  attack: (technique) ->
+    technique.execute(enemy, this)
 
 
 
@@ -84,17 +83,17 @@ class Enemy extends Monster
   attack: (technique = null, target = hero) ->
     unless technique
       technique = @techniques[rand(@techniques.length) - 1]
-    technique.execute(target)
+    technique.execute(target, this)
 
 class Technique
   constructor: (json) ->
     attributes = ['id', 'name', 'power', 'animation']
     initializeFromJSON(this, attributes, json)
 
-  execute: (target) ->
+  execute: (target, attacker = null) ->
     target.update_hp(-@power)
     playAnimation(target, @animation)
-    $('#message').text("#{target.name} was hit with #{@name}").slideDown()
+    $('#message').text("#{attacker.name} hit #{target.name} with #{@name}").slideDown()
 
 playAnimation = (target, animation) ->
   $("##{target.type} .portrait img").addClass(animation)
@@ -107,27 +106,26 @@ rand = (max) ->
 
 hero = new Hero(json, all_techniques)
 enemy = new Enemy(json, all_techniques)
-state = 'playerTurn'
+state = 'selectAttack'
+
+next = ->
+  if state == 'selectAttack'
+    removeAnimation(hero)
+    technique = hero.techniques[selector]
+    hero.attack(technique)
+    $('#techniques').slideUp()
+    state = 'enemyTurn'
+  else if state == 'enemyTurn'
+    removeAnimation(enemy)
+    enemy.attack()
+    state = 'selectAttack'
+    $("#techniques").slideDown()
 
 $(document).ready ->
-  $("body").click(->
-    console.log(state)
-    if state == 'playerTurn'
-
-    else if state == 'enemyTurn'
-      removeAnimation(enemy)
-      enemy.attack()
-      state = 'playerTurn'
-      $("#techniques").slideDown()
-  )
-
-
-
   hero.update_hp()
   enemy.update_hp()
   hero.update_image()
   enemy.update_image()
-
 
   hero.showTechniques()
 
@@ -135,12 +133,12 @@ $(document).ready ->
 #  window.hero = hero
 #  window.enemy = enemy
 
-changeSelector = ->
+updateSelector = ->
   techniques = $("#techniques").children()
   if selector < 0 then selector += techniques.length
   if selector >= techniques.length then selector -= techniques.length
   techniques.removeClass('selected')
-  $("#techniques li:nth-child(#{selector+1})").addClass('selected')
+  $("#techniques div:nth-child(#{selector+1})").addClass('selected')
 
 Key =
   LEFT: 37,
@@ -155,14 +153,12 @@ Key =
 
   onKeydown: (event) ->
     if event.keyCode == 38
-      console.log('up', event)
       selector--
-      changeSelector()
+      updateSelector()
     else if event.keyCode == 40
-      console.log('down', event)
       selector++
-      changeSelector()
-    else
-      console.log('idk', event)
+      updateSelector()
+    else if event.keyCode == 32
+      next()
 
 window.addEventListener 'keydown', ((event) -> Key.onKeydown(event); event.preventDefault(); return false), false

@@ -2,11 +2,28 @@
 
 $enemy-portrait-left: 191px
 $enemy-portrait-top: 8px
+$default-border-radius: 5px
 
 #options
   position: absolute
   margin-left: 0px
   margin-top: 0px
+  width: 320px
+
+  #techniques
+    width: 200px
+    margin: auto
+    .technique
+      margin: auto
+      height: 20px
+
+      border: 2px solid orange
+      @include border-radius()
+
+    .technique.selected
+      height: 23px
+      width: 205px
+      border-color: orangered
 
 #battleScreen
   height: 200px
@@ -14,10 +31,16 @@ $enemy-portrait-top: 8px
   background-color: #E58F8F
   position: relative
 
-#hero .hp
-  position: absolute
-  margin-left: 113px
-  margin-top: 158px
+#hero
+  .hp
+    position: absolute
+    margin-left: 113px
+    margin-top: 158px
+  .portrait
+    position: relative
+    left: 7px
+    top: 92px
+    position: absolute
 
 #enemy
   .hp
@@ -32,8 +55,4 @@ $enemy-portrait-top: 8px
 .shake
   +animate(shake, 0.5s, 0)
 
-#hero .portrait
-  position: relative
-  left: 7px
-  top: 92px
-  position: absolute
+#hero
