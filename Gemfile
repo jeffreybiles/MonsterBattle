@@ -14,9 +14,6 @@ gem 'make_resourceful'
 gem 'sass-rails'
 gem 'compass'
 gem 'compass-rails'
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 group :production do
   gem 'pg'
   gem 'thin'
