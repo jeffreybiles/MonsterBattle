@@ -11,6 +11,7 @@ gem 'haml-rails'
 gem 'simple_form'
 gem 'make_resourceful'
 
+gem 'sass-rails'
 gem 'compass'
 gem 'compass-rails'
 # Bundle edge Rails instead:
@@ -40,7 +41,6 @@ gem 'quiet_assets', group: :development
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails'
   gem 'coffee-rails'
   gem 'uglifier'
 end
