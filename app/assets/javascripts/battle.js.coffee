@@ -88,10 +88,15 @@ class Technique
     attributes = ['id', 'name', 'power', 'animation']
     initializeFromJSON(this, attributes, json)
 
-  execute: (target, attacker = null) ->
-    target.update_hp(-@power)
+  execute: (target, attacker) ->
+    damage = @calculateDamage(target, attacker)
+    target.update_hp(-damage)
     playAnimation(target, @animation)
     $('#message').text("#{attacker.name} hit #{target.name} with #{@name}").slideDown()
+
+  calculateDamage: (target, attacker) ->
+    @power + attacker.current_attack - target.current_defense
+
 
 playAnimation = (target, animation) ->
   $("##{target.type} .portrait img").addClass(animation)
