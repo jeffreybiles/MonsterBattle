@@ -10,7 +10,6 @@ gem 'haml'
 gem 'haml-rails'
 gem 'simple_form'
 gem 'make_resourceful'
-gem 'compass-rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -42,6 +41,8 @@ group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
   gem 'uglifier'
+  gem 'compass'
+  gem 'compass-rails'
 end
 
 gem 'jquery-rails'

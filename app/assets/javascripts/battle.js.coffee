@@ -72,8 +72,6 @@ class Hero extends Monster
   attack: (technique) ->
     technique.execute(enemy, this)
 
-
-
 class Enemy extends Monster
   constructor: (json, all_techniques) ->
     json = json.enemy if json.enemy
@@ -129,10 +127,6 @@ $(document).ready ->
 
   hero.showTechniques()
 
-#for debugging.  REMOVE BEFORE PRODUCTION
-#  window.hero = hero
-#  window.enemy = enemy
-
 updateSelector = ->
   techniques = $("#techniques").children()
   if selector < 0 then selector += techniques.length
@@ -142,13 +136,9 @@ updateSelector = ->
 
 Key =
   LEFT: 37,
-  A: 65,
   UP: 38,
-  W: 87,
   RIGHT: 39,
-  D: 68,
   DOWN: 40,
-  S: 83,
   SPACE: 32,
 
   onKeydown: (event) ->

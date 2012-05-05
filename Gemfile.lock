@@ -212,6 +212,7 @@ PLATFORMS
 DEPENDENCIES
   capybara
   coffee-rails
+  compass
   compass-rails
   database_cleaner
   devise
