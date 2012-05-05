@@ -25,11 +25,12 @@ $enemy-portrait-top: 8px
     margin-left: 12px
     margin-top: 8px
   .portrait
-    //    This animation should only happen when the enemy is hit
-    //+animate(shake, 0.5s, 0)
     left: $enemy-portrait-left
     top: $enemy-portrait-top
     position: absolute
+
+.shake
+  +animate(shake, 0.5s, 0)
 
 #hero .portrait
   position: relative
