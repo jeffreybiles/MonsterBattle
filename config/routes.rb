@@ -1,5 +1,13 @@
 MonsterBattle::Application.routes.draw do
 
+  get "show_me/index"
+
+  get "show_me/show"
+
+  get "show_me/update"
+
+  get "show_me/create"
+
   resources :species_moves
 
   resources :moves

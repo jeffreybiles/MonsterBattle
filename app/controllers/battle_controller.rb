@@ -3,4 +3,6 @@ class BattleController < ApplicationController
     render '/index'
   end
 
+
+
 end

@@ -1,50 +1,23 @@
-json =
-  hero:
-    id: 4
-    name: "Thesis"
-    max_attack: 10
-    current_attack: 9
-    max_hp: 20
-    current_hp: 20
-    max_defense: 5
-    current_defense: 4
-    techniques: [0, 1]
-    image_url: "http://avatarswizard.com/uploads/av/2009-03/thumbs/100x100_1236347910_lego-pokemon-1.jpg"
-  enemy:
-    id: 1
-    name: "AntiThesis"
-    max_attack: 9
-    current_attack: 9
-    max_hp: 18
-    current_hp: 18
-    max_defense: 4
-    current_defense: 4
-    techniques: [0]
-    image_url: "http://avatarmaker.eu/free-avatars/avatars/games_225/super_mario_259/super_mario_panic_avatar_100x100_25831.gif"
-
-all_techniques =
-  0:
-    id: 0
-    name: 'push'
-    power: 2
-    animation: 'shake'
-  1:
-    id: 1
-    name: 'shove'
-    power: 4
-    animation: 'shake'
-
-initializeFromJSON = (self, attributes, json) ->
-  for attribute in attributes
-    eval("self.#{attribute} = json.#{attribute}")
+initializeFromJSON = (self, json) ->
+  jQuery.each(json, ((key, value) ->
+    eval("self.#{key} = value")
+  ))
 
 selector = 0
 
 class Monster
-  constructor: (json, all_techniques) ->
-    attributes = [ 'id', 'name', 'max_attack', 'current_attack', 'max_defense', 'current_defense', 'max_hp', 'current_hp', 'image_url']
-    initializeFromJSON(this, attributes, json)
-    @techniques = json.techniques.map((index) -> new Technique(all_techniques[index]))
+  constructor: (id) ->
+    monster = this
+    $.ajax
+      url: "http://localhost:3000/monsters/#{id}",
+      dataType: "json",
+      type: "GET",
+      processData: false,
+      contentType: "application/json"
+      success: (json, status, xhr) ->
+        initializeFromJSON(monster, json.monster)
+        console.log(monster)
+        @techniques = json.techniques.map((tech) -> new Technique(tech))
 
   update_hp: (change = 0) ->
     @current_hp += change
@@ -55,10 +28,9 @@ class Monster
     $("##{@type} .portrait img").attr('src', @image_url)
 
 class Hero extends Monster
-  constructor: (json, all_techniques) ->
-    json = json.hero if json.hero
+  constructor: (id) ->
     @type = 'hero'
-    super json, all_techniques
+    super id
 
   showTechniques: () ->
     $('#techniques').html('')
@@ -85,8 +57,9 @@ class Enemy extends Monster
 
 class Technique
   constructor: (json) ->
-    attributes = ['id', 'name', 'power', 'animation']
-    initializeFromJSON(this, attributes, json)
+    console.log(json)
+    initializeFromJSON(this, json)
+    console.log(this)
 
   execute: (target, attacker) ->
     damage = @calculateDamage(target, attacker)
@@ -107,8 +80,9 @@ removeAnimation = (target) ->
 rand = (max) ->
   Math.ceil(Math.random()*max)
 
-hero = new Hero(json, all_techniques)
-enemy = new Enemy(json, all_techniques)
+
+hero = new Hero(3)
+#enemy = new Enemy(json, all_techniques)
 state = 'selectAttack'
 
 next = ->
