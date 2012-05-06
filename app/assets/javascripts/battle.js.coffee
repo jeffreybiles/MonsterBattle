@@ -16,14 +16,17 @@ class Monster
       contentType: "application/json"
       success: (json, status, xhr) ->
         initializeFromJSON(monster, json.monster)
-        console.log(monster)
-        @techniques = json.techniques.map((tech) -> new Technique(tech))
+        monster.techniques = json.techniques.map((tech) -> new Technique(tech))
+        if monster.type == 'hero'
+          monster.showTechniques()
+        monster.update_hp()
+        monster.update_image(monster.image_url)
 
   update_hp: (change = 0) ->
     @current_hp += change
     $("##{@type} .hp").text("#{@current_hp}/#{@max_hp}")
 
-  update_image: (url = @image_url) ->
+  update_image: (url = @image_url || '/assets/hero_default.jpg') ->
     @image_url = url
     $("##{@type} .portrait img").attr('src', @image_url)
 
@@ -31,9 +34,11 @@ class Hero extends Monster
   constructor: (id) ->
     @type = 'hero'
     super id
+    window.Hero = this
 
   showTechniques: () ->
     $('#techniques').html('')
+    console.log(@techniques)
     for technique in @techniques
       html = "<div class='#{technique.name} technique' data-power='#{technique.power}' data-name='#{technique.name}'>#{technique.name}</div>"
       $('#techniques').append(html)
@@ -81,8 +86,8 @@ rand = (max) ->
   Math.ceil(Math.random()*max)
 
 
-hero = new Hero(3)
-#enemy = new Enemy(json, all_techniques)
+hero = ''
+enemy = ''
 state = 'selectAttack'
 
 next = ->
@@ -99,12 +104,13 @@ next = ->
     $("#techniques").slideDown()
 
 $(document).ready ->
-  hero.update_hp()
-  enemy.update_hp()
-  hero.update_image()
-  enemy.update_image()
-
-  hero.showTechniques()
+  hero = new Hero(3)
+  enemy = new Enemy(3)
+#  hero.update_hp()
+#  enemy.update_hp()
+#  hero.update_image()
+#  enemy.update_image()
+  return
 
 updateSelector = ->
   techniques = $("#techniques").children()
