@@ -5,10 +5,13 @@
   = @move.name
 %p
   %b Damage:
-  = @move.damage
+  = @move.power
 %p
   %b Hit chance:
   = @move.hit_chance
+%p
+  %b Animation:
+  = @move.animation
 
 = link_to 'Edit', edit_move_path(@move)
 \|

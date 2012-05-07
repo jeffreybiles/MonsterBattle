@@ -1,7 +1,16 @@
-initializeFromJSON = (self, json) ->
+initializeJsonAttributes = (self, json) ->
   jQuery.each(json, ((key, value) ->
-    eval("self.#{key} = value")
+    if isNumericString(value)
+      console.log(key, 'was numeric')
+      eval("self.#{key} = parseFloat(value)")
+    else
+      console.log(key, 'was NOT numeric')
+      eval("self.#{key} = value")
   ))
+
+isNumericString = (string) ->
+  regex = /^[0-9]+\.?[0-9]*$/
+  regex.exec(string)
 
 selector = 0
 
@@ -14,16 +23,20 @@ class Monster
       type: "GET",
       processData: false,
       contentType: "application/json"
+      #should add an error as well
       success: (json, status, xhr) ->
-        initializeFromJSON(monster, json.monster)
-        monster.techniques = json.techniques.map((tech) -> new Technique(tech))
-        if monster.type == 'hero'
-          monster.showTechniques()
-        monster.update_hp()
-        monster.update_image(monster.image_url)
+        monster.buildFromJson(json)
+        
+  buildFromJson: (json) ->
+    initializeJsonAttributes(@, json.monster)
+    @techniques = json.techniques.map((tech) -> new Technique(tech))
+    if @type == 'hero' then @showTechniques()
+    @update_hp()
+    @update_image(@image_url)
+
 
   update_hp: (change = 0) ->
-    @current_hp += change
+    @current_hp += parseFloat(change)
     $("##{@type} .hp").text("#{@current_hp}/#{@max_hp}")
 
   update_image: (url = @image_url || '/assets/hero_default.jpg') ->
@@ -38,7 +51,6 @@ class Hero extends Monster
 
   showTechniques: () ->
     $('#techniques').html('')
-    console.log(@techniques)
     for technique in @techniques
       html = "<div class='#{technique.name} technique' data-power='#{technique.power}' data-name='#{technique.name}'>#{technique.name}</div>"
       $('#techniques').append(html)
@@ -62,18 +74,19 @@ class Enemy extends Monster
 
 class Technique
   constructor: (json) ->
-    console.log(json)
-    initializeFromJSON(this, json)
-    console.log(this)
+    initializeJsonAttributes(this, json)
 
   execute: (target, attacker) ->
     damage = @calculateDamage(target, attacker)
+    console.log(damage)
     target.update_hp(-damage)
+    console.log(target.current_hp)
     playAnimation(target, @animation)
     $('#message').text("#{attacker.name} hit #{target.name} with #{@name}").slideDown()
 
   calculateDamage: (target, attacker) ->
-    @power + attacker.current_attack - target.current_defense
+    console.log(@power, attacker.current_attack, target.current_defense)
+    return @power + attacker.current_attack - target.current_defense
 
 
 playAnimation = (target, animation) ->
@@ -106,10 +119,6 @@ next = ->
 $(document).ready ->
   hero = new Hero(3)
   enemy = new Enemy(3)
-#  hero.update_hp()
-#  enemy.update_hp()
-#  hero.update_image()
-#  enemy.update_image()
   return
 
 updateSelector = ->
@@ -136,4 +145,4 @@ Key =
     else if event.keyCode == 32
       next()
 
-window.addEventListener 'keydown', ((event) -> Key.onKeydown(event); event.preventDefault(); return false), false
+window.addEventListener 'keydown', ((event) -> Key.onKeydown(event); return false), false

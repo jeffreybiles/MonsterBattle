@@ -7,7 +7,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<%= render 'layouts/nav' %>
+<%= if @skip_header != 'yes' then render 'layouts/nav' end %>
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
 <%= yield %>

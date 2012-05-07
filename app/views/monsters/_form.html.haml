@@ -1,7 +1,7 @@
 = simple_form_for @monster do |f|
   = render 'layouts/errors', object: @monster
 
-  .field= f.input :custom_name
+  .field= f.input :name
   .field= f.input :level
   .field= f.input :experience
   .field= f.input :user_id, collection: User.all

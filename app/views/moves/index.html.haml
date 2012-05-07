@@ -5,6 +5,7 @@
     %th Name
     %th Damage
     %th Hit chance
+    %th Animation
     %th
     %th
     %th
@@ -12,8 +13,9 @@
   - @moves.each do |move|
     %tr
       %td= move.name
-      %td= move.damage
+      %td= move.power
       %td= move.hit_chance
+      %td= move.animation
       %td= link_to 'Show', move
       %td= link_to 'Edit', edit_move_path(move)
       %td= link_to 'Destroy', move, :confirm => 'Are you sure?', :method => :delete

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120411222016) do
+ActiveRecord::Schema.define(:version => 20120507022722) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(:version => 20120411222016) do
   end
 
   create_table "monsters", :force => true do |t|
-    t.string   "custom_name"
+    t.string   "name"
     t.integer  "level"
     t.decimal  "experience"
     t.integer  "user_id"
@@ -39,10 +39,11 @@ ActiveRecord::Schema.define(:version => 20120411222016) do
 
   create_table "moves", :force => true do |t|
     t.string   "name"
-    t.decimal  "damage"
+    t.decimal  "power"
     t.decimal  "hit_chance"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "animation"
   end
 
   create_table "species", :force => true do |t|
@@ -52,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20120411222016) do
     t.decimal  "defense_growth"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.string   "image_url"
   end
 
   create_table "species_moves", :force => true do |t|

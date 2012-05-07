@@ -1,9 +1,11 @@
 class Monster < ActiveRecord::Base
   before_create :set_stats
-  attr_accessible :custom_name, :experience, :level, :user_id, :species_id, :user_name
+  attr_accessible :name, :experience, :level, :user_id, :species_id, :user_name
 
   belongs_to :user
   belongs_to :species
+
+  delegate :image_url, to: :species
 
   validates :level, numericality: true
   validates :experience, numericality: true
