@@ -6,9 +6,10 @@ class MonstersController < ApplicationController
   def show
     @monster = Monster.find(params[:id])
     @moves = @monster.species.moves
+    image_url = @monster.species.image_url
     respond_to do |format|
       format.html  # index.html.erb
-      format.json  { render :json => {monster: @monster, techniques: @moves}}
+      format.json  { render :json => {monster: @monster, techniques: @moves, image_url: image_url}}
     end
   end
 end

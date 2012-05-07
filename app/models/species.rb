@@ -1,5 +1,5 @@
 class Species < ActiveRecord::Base
-  attr_accessible :name, :hp_growth, :attack_growth, :defense_growth
+  attr_accessible :name, :hp_growth, :attack_growth, :defense_growth, :image_url
 
   validates :name,
             presence: true,

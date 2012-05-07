@@ -1,10 +1,8 @@
 initializeJsonAttributes = (self, json) ->
   jQuery.each(json, ((key, value) ->
     if isNumericString(value)
-      console.log(key, 'was numeric')
       eval("self.#{key} = parseFloat(value)")
     else
-      console.log(key, 'was NOT numeric')
       eval("self.#{key} = value")
   ))
 
@@ -32,12 +30,12 @@ class Monster
     @techniques = json.techniques.map((tech) -> new Technique(tech))
     if @type == 'hero' then @showTechniques()
     @update_hp()
-    @update_image(@image_url)
+    @update_image(json.image_url)
 
 
   update_hp: (change = 0) ->
     @current_hp += parseFloat(change)
-    $("##{@type} .hp").text("#{@current_hp}/#{@max_hp}")
+    $("##{@type} .hp").text("#{Math.round(@current_hp)}/#{@max_hp}")
 
   update_image: (url = @image_url || '/assets/hero_default.jpg') ->
     @image_url = url
@@ -78,15 +76,12 @@ class Technique
 
   execute: (target, attacker) ->
     damage = @calculateDamage(target, attacker)
-    console.log(damage)
     target.update_hp(-damage)
-    console.log(target.current_hp)
     playAnimation(target, @animation)
     $('#message').text("#{attacker.name} hit #{target.name} with #{@name}").slideDown()
 
   calculateDamage: (target, attacker) ->
-    console.log(@power, attacker.current_attack, target.current_defense)
-    return @power + attacker.current_attack - target.current_defense
+    return (@power + attacker.current_attack) / target.current_defense
 
 
 playAnimation = (target, animation) ->
@@ -118,7 +113,7 @@ next = ->
 
 $(document).ready ->
   hero = new Hero(3)
-  enemy = new Enemy(3)
+  enemy = new Enemy(5)
   return
 
 updateSelector = ->

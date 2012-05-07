@@ -5,7 +5,7 @@ class Monster < ActiveRecord::Base
   belongs_to :user
   belongs_to :species
 
-  delegate :image_url, to: :species
+  delegate :image_url, to: :species #this doesn't send the data via json...
 
   validates :level, numericality: true
   validates :experience, numericality: true
